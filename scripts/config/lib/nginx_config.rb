@@ -6,6 +6,7 @@ class NginxConfig
   DEFAULT = {
     root: "public_html/",
     encoding: "UTF-8",
+    auth_basic: false,
     clean_urls: false,
     https_only: false,
     worker_connections: 512
@@ -31,6 +32,7 @@ class NginxConfig
       json["proxies"][loc]["host"] = uri.to_s
     end
 
+    json["auth_basic"] ||= DEFAULT[:auth_basic]
     json["clean_urls"] ||= DEFAULT[:clean_urls]
     json["https_only"] ||= DEFAULT[:https_only]
 
