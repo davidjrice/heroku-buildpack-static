@@ -12,7 +12,7 @@ NGINX_AUTH_BASIC_CONFIG = '/app/bin/config/htpasswd'
 erb = ERB.new(File.read(TEMPLATE)).result(NginxConfig.new(USER_CONFIG).context)
 File.write(NGINX_CONFIG, erb)
 
-if ENV['AUTH_BASIC_USER'] && ENV['AUTH_BASIC_PASSWORD']
+if ENV['AUTH_BASIC'] && ENV['AUTH_BASIC_USER'] && ENV['AUTH_BASIC_PASSWORD']
   require 'webrick'
   htpasswd = WEBrick::HTTPAuth::Htpasswd.new(NGINX_AUTH_BASIC_CONFIG)
   htpasswd.set_passwd(nil, ENV['AUTH_BASIC_USER'], ENV['AUTH_BASIC_PASSWORD'])

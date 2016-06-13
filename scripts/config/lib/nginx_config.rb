@@ -33,7 +33,9 @@ class NginxConfig
     end
 
     json["auth_basic"] ||= DEFAULT[:auth_basic]
-    json["auth_basic"] ||= ENV["AUTH_BASIC"]
+    if ENV.has_key? "AUTH_BASIC"
+      json["auth_basic"] ||= ENV["AUTH_BASIC"]
+    end
 
     json["clean_urls"] ||= DEFAULT[:clean_urls]
     json["https_only"] ||= DEFAULT[:https_only]
