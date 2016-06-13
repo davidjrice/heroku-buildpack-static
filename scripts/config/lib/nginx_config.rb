@@ -34,7 +34,7 @@ class NginxConfig
 
     json["auth_basic"] ||= DEFAULT[:auth_basic]
     if ENV.has_key? "AUTH_BASIC"
-      json["auth_basic"] ||= ENV["AUTH_BASIC"]
+      json["auth_basic"] ||= (ENV["AUTH_BASIC"] === "true")
     end
 
     json["clean_urls"] ||= DEFAULT[:clean_urls]
