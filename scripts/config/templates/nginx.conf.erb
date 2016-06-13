@@ -58,6 +58,7 @@ http {
 
   <% if clean_urls %>
     location ~ \.html$ {
+      auth_basic off;
       try_files $uri =404;
     }
   <% end %>
@@ -70,6 +71,7 @@ http {
 
   <% routes.each do |route, path| %>
     location ~ ^<%= route %>$ {
+      auth_basic off;
       set $route <%= route %>;
       mruby_set $path /app/bin/config/lib/ngx_mruby/routes_path.rb cache;
       mruby_set $fallback /app/bin/config/lib/ngx_mruby/routes_fallback.rb cache;
@@ -83,18 +85,21 @@ http {
 
   <% proxies.each do |location, hash| %>
     location <%= location %> {
+      auth_basic off;
       proxy_pass <%= hash['origin'] %>;
     }
   <% end %>
 
   # need this b/c setting $fallback to =404 will try #{root}=404 instead of returning a 404
   location @404 {
+    auth_basic off;
     return 404;
   }
 
   # fallback proxy named match
   <% proxies.each do |location, hash| %>
     location @<%= location %> {
+      auth_basic off;
       rewrite ^<%= location %>(.*)$ <%= hash['path'] %>/$1 break;
       proxy_pass <%= hash['host'] %>;
     }
@@ -103,6 +108,7 @@ http {
   # fallback redirects named match
   <% redirects.each do |path, hash| %>
     location @<%= path %> {
+      auth_basic off;
       return <%= hash['status'] || 301 %> <%= hash['url'] %>;
     }
   <% end %>
