@@ -550,5 +550,24 @@ STATIC_JSON
         end
       end
     end
+
+    context "auth_basic" do
+      let(:name) { "auth_basic" }
+      let(:env) do
+        {
+          "AUTH_BASIC" => true,
+          "AUTH_BASIC_USER" => "user",
+          "AUTH_BASIC_PASSWORD" => "password"
+        }
+      end
+
+      it "should require authentication" do
+        app.run do
+          response = app.get("/")
+          expect(response.code).to eq("401")
+        end
+      end
+    end
+
   end
 end

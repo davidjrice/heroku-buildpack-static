@@ -1,0 +1,5 @@
+{
+  "auth_basic": true,
+  "auth_basic_username": "user",
+  "auth_basic_password": "password"
+}
